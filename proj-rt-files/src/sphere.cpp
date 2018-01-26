@@ -46,8 +46,8 @@ vec3 Sphere::Normal(const vec3& point) const
 {
     vec3 normal;
     // TODO: set the normal
-    normal = point - center;
+    //normal = point - center;
     //normal.normalized()
-    normal = normal.normalized();
+    normal = (point - center).normalized();
     return normal;
 }

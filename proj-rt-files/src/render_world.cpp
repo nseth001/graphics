@@ -27,14 +27,14 @@ Object* Render_World::Closest_Intersection(const Ray& ray,Hit& hit)
 {
     // TODO
     double min_t = std::numeric_limits<double>::max();
-    
-    Object* closest_object = NULL; 
-    
+
+    Object* closest_object = NULL;
+
     for (Object* object: objects) {
         std::vector<Hit> hits_list;
-        
+
         object->Intersection(ray, hits_list);
-        
+
         for(double i = 0; i < hits_list.size(); i++) {
             if (hits_list[i].t > small_t && hits_list[i].t < min_t)
             {
@@ -42,9 +42,9 @@ Object* Render_World::Closest_Intersection(const Ray& ray,Hit& hit)
                 closest_object = object;
             }
         }
-        
+
     }
-    
+
     return closest_object;
 }
 
@@ -52,10 +52,10 @@ Object* Render_World::Closest_Intersection(const Ray& ray,Hit& hit)
 void Render_World::Render_Pixel(const ivec2& pixel_index)
 {
     //Ray ray; // TODO: set up the initial view ray here
-    vec3 endpoint = camera.position; 
+    vec3 endpoint = camera.position;
     vec3 worldpos = camera.World_Position(pixel_index);
-    //vec3 direction = (worldpos - endpoint).normalized(); 
-    //ray function already normalizes inputs. 
+    //vec3 direction = (worldpos - endpoint).normalized();
+    //ray function already normalizes inputs.
     Ray ray(endpoint, (worldpos-endpoint));
     vec3 color=Cast_Ray(ray,1);
     camera.Set_Pixel(pixel_index,Pixel_Color(color));
@@ -73,20 +73,20 @@ vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
 {
     // TODO
     vec3 color, dummy;
-    
+
     Hit fillhit;
     Object* obj = Closest_Intersection(ray, fillhit);
-    
+
     if (obj != nullptr){
-        color = obj->material_shader-> Shade_Surface(ray, dummy, dummy, recursion_depth, false);
+        color = obj->material_shader-> Shade_Surface(ray, ray.Point(h,t), obj->Normal(h,t), recursion_depth, false);
     }
-    
+
     else {
         color = background_shader->Shade_Surface(ray, dummy, dummy, recursion_depth, false);
     }
-    
-    
-    
+
+
+
     // determine the color here
 
     return color;

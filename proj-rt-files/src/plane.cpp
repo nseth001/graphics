@@ -20,7 +20,7 @@ Intersection(const Ray& ray, std::vector<Hit>& hits) const
     normal = this->normal;
 
     intersectVal = dot(normal, v);
-    t = -1*(dot(normal,(u-x1)) / intersectVal);
+    t = (dot(normal,(x1 - u)) / intersectVal);
 
     Hit hitObj = {this, t, true};
 

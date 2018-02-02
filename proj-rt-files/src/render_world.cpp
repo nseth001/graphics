@@ -76,6 +76,11 @@ vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
     // TODO
     vec3 color, dummy;
 
+    if (recursion_depth_limit < recursion_depth) {
+      return background_shader->Shade_Surface(ray, dummy, dummy, recursion_depth, false);
+
+    }
+
     Hit h;
     Object* obj = Closest_Intersection(ray, h);
 

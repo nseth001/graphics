@@ -89,7 +89,7 @@ vec3 Render_World::Cast_Ray(const Ray& ray,int recursion_depth)
     }
 
     else {
-        color = background_shader->Shade_Surface(ray, dummy, dummy, recursion_depth, false);
+        color = background_shader->Shade_Surface(ray, dummy, dummy, recursion_depth, h.ray_exiting);
     }
 
 

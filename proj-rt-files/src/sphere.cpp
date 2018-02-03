@@ -31,7 +31,7 @@ bool Sphere::Intersection(const Ray& ray, std::vector<Hit>& hits) const
         double t2 = (-b + pow(discr, 0.5));
 
         if (t1 > 0) {
-            Hit hit1 = {this, t1, true};
+            Hit hit1 = {this, t1, false};
             hits.push_back(hit1);
         }
 

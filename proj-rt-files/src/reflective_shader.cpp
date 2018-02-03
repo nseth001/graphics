@@ -30,14 +30,5 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 
     color = (reflectivity * reflectorColor + (1 - reflectivity)* shaderColor);
 
-
-
-
-
-
-
-
-
-
     return color;
 }

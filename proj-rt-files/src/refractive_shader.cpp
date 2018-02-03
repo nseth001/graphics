@@ -51,6 +51,7 @@ Shade_Surface(const Ray& ray, const vec3& intersection_point,
           vec3 tVal = nDiv * (ray.direction.normalized()
                       - dot(ray.direction.normalized(),n)*n)
                       - (cosR*n);
+
           //now need to cast the computed ray
           Ray refractRay(intersection_point, tVal);
           //not sure if i increment my recursion depth
@@ -62,7 +63,7 @@ Shade_Surface(const Ray& ray, const vec3& intersection_point,
           double refractPerpendicular = pow( (ni * cosI - nr*cosR)/
                                     (ni*cosI + nr*cosR),2);
 
-          double k = ((refractPerpendicular + refractParallel) / 2.0);
+          double k = ((refractPerpendicular + refractParallel) / 2);
           reflectance_ratio = k;
 
 

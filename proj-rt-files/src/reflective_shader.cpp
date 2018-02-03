@@ -26,7 +26,7 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
 
     reflectorColor = world.Cast_Ray(reflector, recursion_depth+=1);
 
-    shaderColor = shader->Shade_Surface(ray, intersection_point, same_side_normal, recursion_depth,false);
+    shaderColor = shader->Shade_Surface(ray, intersection_point, same_side_normal, recursion_depth,is_exiting);
 
     color = (reflectivity * reflectorColor + (1 - reflectivity)* shaderColor);
 

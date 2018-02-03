@@ -25,28 +25,30 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
       double distance = (intersection_point - world.lights.at(i)->position).magnitude_squared();
 
 
-      Ray shadow_obj(intersection_point, lnorm);
+      Ray shadow_obj;
       //
-      //shadow_obj.endpoint = intersection_point;
+      shadow_obj.endpoint = world.lights[i]->position;
+      shadow_obj.direction = lnorm;
 
 
-      Hit hit1;
+      //Hit hit1;
 
       //Object *object1 = world.Closest_Intersection(shadow_obj, hit1);
 
 
       if(world.enable_shadows) {
+          Hit hit2;
+          Ray shadow_obj2;
+          shadow_obj2.direction = lnorm;
+          shadow_obj2.endpoint = intersection_point;
 
-          shadow_obj.direction = lnorm;
-          shadow_obj.endpoint = intersection_point;
-
-          if (world.Closest_Intersection(shadow_obj, hit1)){
-            if (sqrt(distance) > hit1.t) continue;
+          if (world.Closest_Intersection(shadow_obj2, hit2)){
+            if (sqrt(distance) > hit2.t) continue;
           }
         }
 
           //light color from lab
-          light_color = (world.lights.at(i)->Emitted_Light(ray)) / distance;
+          light_color = (world.lights.at(i)->Emitted_Light(shadow_obj)) / distance;
 
           //l*n dot product
           double ln_DP = dot(n, l.normalized());
@@ -57,7 +59,7 @@ Shade_Surface(const Ray& ray,const vec3& intersection_point,
           vec3 reflectionMod, cameraMod;
 
 
-          cameraMod = world.camera.position - intersection_point;
+          cameraMod = -1.0 * ray.direction.normalized();
 
           reflectionMod = 2 * dot(l.normalized(),n)*n - l.normalized();
 
